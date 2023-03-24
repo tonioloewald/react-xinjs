@@ -13,7 +13,7 @@ the virtual DOM hierarchy, and needing to reroute data or write reducers.
 
 <div style="text-align: center">
 	<a href="https://twitter.com/dan_abramov/status/1191487232038883332?s=20&t=SNcVBTK1oj45NWI29RO1Dw">
-		<img alt="Dan Abramov dissing Redux on Twitter" style="max-width: 80%" src="dan-redux-tweet.png">
+		<img alt="Dan Abramov dissing Redux on Twitter" style="max-width: 80%" src="docs/dan-redux-tweet.png">
 	</a>
 </div>
 
