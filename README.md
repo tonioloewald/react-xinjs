@@ -1,5 +1,7 @@
 # react-xinjs
 
+[github](https://github.com/tonioloewald/react-xinjs#readme) | [npm](https://www.npmjs.com/package/react-xinjs) | [xinjs](https://xinjs.net)
+
 Incredibly simple, powerful, and efficient state management for React…
 
 `useXin` leverages [React hooks](https://legacy.reactjs.org/docs/hooks-intro.html) to
