@@ -1,6 +1,6 @@
 {
   "name": "react-xinjs",
-  "version": "0.2.2",
+  "version": "0.4.2",
   "description": "Incredibly simple, powerful, and efficient state management for React…",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -31,6 +31,6 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "xinjs": "^0.1.8"
+    "xinjs": "^0.4.2"
   }
 }

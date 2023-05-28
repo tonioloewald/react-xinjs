@@ -8,7 +8,7 @@ Incredibly simple, powerful, and efficient state management for React…
 make managing application state incredibly simple. No more passing data down through
 the virtual DOM hierarchy, and needing to reroute data or write reducers.
 
-[sandbox example](https://codesandbox.io/s/xinjs-react-reminders-demo-kof9tj?file=/src/App.tsx)
+[sandbox example](https://codesandbox.io/s/xinjs-react-reminders-demo-v0-4-2-l46k52?file=/src/App.tsx)
 
 > This library breaks out the `useXin` function from [xinjs](https://xinjs.net)
 > so that `xinjs` has no dependence on react.
@@ -32,14 +32,14 @@ Pass any object to `xin`, then access it exactly like you would via `useState`
 except using `useXin('path.to.value')`. E.g.
 
 ```
-import {xin, useXin} from 'xinjs'
+import { xinProxy, useXin } from 'xinjs'
 
-xin.clock = {
+const clock = xinProxy({ clock: {
 	time: new Date().toLocaleTimeString()
-}
+} })
 
 setInterval(() => {
-	xin.clock.time = new Date.toLocaleTimeString()
+	clock.time = new Date.toLocaleTimeString()
 }, 1000)
 
 const Clock = () => {
@@ -67,34 +67,34 @@ and only pure components.
 Better, faster, cheaper. You *can* have all three.
 
 ```
-import {xin, useXin} from 'xin-react'
+import { xinProxy, useXin } from 'xin-react'
 
-xin.app = {
+const { app } = xinProxy({ app: {
   itemText: '',
   todos: [],
   addItem(event) {
     event.preventDefault() // forms reload the page by default!
-    if(!xin.app.itemText) return
-    xin.app.todos.push({
+    if(!app.itemText) return
+    app.todos.push({
       id: crypto.randomUUID(),
-      text: xin.app.itemText  
+      text: app.itemText  
     })
-    xin.app.itemText = ''
+    app.itemText = ''
   }
-}
+} })
 
 const Editor = () => {
   const [itemText, setItemText] = useXin('app.itemText')
-  return <form onSubmit={xin.app.addItem}>
+  return <form onSubmit={app.addItem}>
     <input value={itemText} onInput={event => setItemText(event.target.value)} />
-    <button disabled={!itemText} onClick={xin.app.addItem}>Add Item</button>
+    <button disabled={!itemText} onClick={app.addItem}>Add Item</button>
   </form>
 }
 
 const List = () => {
   const [todos] = useXin('app.todos')
   return <ul>
-    {todos.map(item => <li key={item.id}>{item.text}</li>)}
+    { todos.map(item => <li key={item.id}>{item.text}</li>) }
   </ul>
 }
 
