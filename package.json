@@ -1,6 +1,6 @@
 {
   "name": "react-xinjs",
-  "version": "0.4.2",
+  "version": "0.4.5",
   "description": "Incredibly simple, powerful, and efficient state management for React…",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -26,11 +26,11 @@
   "devDependencies": {
     "@parcel/packager-ts": "^2.8.3",
     "@parcel/transformer-typescript-types": "^2.8.3",
-    "parcel": "^2.8.3",
+    "parcel": "^2.9.1",
     "typescript": "^5.0.2"
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "xinjs": "^0.4.2"
+    "xinjs": "^0.4.5"
   }
 }
