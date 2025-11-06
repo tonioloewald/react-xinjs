@@ -29513,25 +29513,28 @@ var container = document.querySelector("main");
 var BodyMovin = Z2.xinLottie;
 var Markdown = Z2.xinMd;
 var root = import_client.default.createRoot(container);
-root.render(/* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
-  style: { display: "flex", alignItems: "center", flexDirection: "column" },
-  children: [
-    /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(BodyMovin, {
-      style: { width: "300px", height: "300px", marginBottom: "-65px" },
-      src: "/tosi.json"
-    }, undefined, false, undefined, this),
-    /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(todo_default, {}, undefined, false, undefined, this),
-    /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Markdown, {
-      style: {
-        fontFamily: "Helvetic Neue, Sans-serif",
-        maxWidth: "40em",
-        background: "#fdfdfd",
-        margin: "2em 0",
-        padding: "2em",
-        borderRadius: "0.25em",
-        boxShadow: "0 2px 4px #0004"
-      },
-      src: "/use-tosi.md"
-    }, undefined, false, undefined, this)
-  ]
-}, undefined, true, undefined, this));
+root.render(/* @__PURE__ */ jsx_dev_runtime2.jsxDEV(jsx_dev_runtime2.Fragment, {
+  children: /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
+    className: "column",
+    children: [
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
+        className: "parallax"
+      }, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(BodyMovin, {
+        style: {
+          width: "300px",
+          height: "300px",
+          marginBottom: "-65px",
+          zIndex: "1",
+          opacity: "0.75"
+        },
+        src: "/tosi.json"
+      }, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(todo_default, {}, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Markdown, {
+        class: "doc",
+        src: "/use-tosi.md"
+      }, undefined, false, undefined, this)
+    ]
+  }, undefined, true, undefined, this)
+}, undefined, false, undefined, this));
