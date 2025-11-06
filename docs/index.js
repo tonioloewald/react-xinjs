@@ -25212,7 +25212,7 @@ var App = () => {
   return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
     className: "App",
     children: [
-      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("h1", {
+      /* @__PURE__ */ jsx_dev_runtime.jsxDEV("h2", {
         children: name
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime.jsxDEV(List, {}, undefined, false, undefined, this),

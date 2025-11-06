@@ -76,7 +76,7 @@ const App = () => {
   const [name] = useTosi("app.name");
   return (
     <div className="App">
-      <h1>{name}</h1>
+      <h2>{name}</h2>
       <List />
       <Editor />
     </div>
