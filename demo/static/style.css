@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&famiSpline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap");
 
 :root {
-  --bg: #fdfdfd80;
+  --bg: #fdfdfd30;
   --body-bg: #ddd;
   --accent-color: #47f;
   --shadow-color: #00000040;
@@ -31,11 +31,17 @@ button {
 input {
   border-radius: var(--rounding-50);
   border: 0;
+  background: #fff6;
 }
 
 button {
+  background: #ccf4;
   border-radius: var(--rounding);
   border: 0;
+}
+
+button:disabled {
+  pointer-events: none;
 }
 
 button:hover {
@@ -44,7 +50,7 @@ button:hover {
 
 button:active {
   background: var(--accent-color);
-  color: var(--bg);
+  color: #fff;
 }
 
 body {
@@ -80,7 +86,7 @@ body {
   width: calc(100vw - 8em);
   max-width: 40em;
   background: var(--bg);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   margin: 2em 0;
   padding: 2em;
   border-radius: 0.5em;
@@ -118,7 +124,7 @@ blockquote {
 
 .App {
   background: var(--bg);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   max-width: 400px;
   margin: auto;
   margin-top: var(--whitespace-200);

@@ -1,8 +1,8 @@
 # react-tosijs
 
-[github](https://github.com/tonioloewald/react-xinjs#readme) | [npm](https://www.npmjs.com/package/react-tosijs) | [tosijs](https://tosijs.net)
+[github](https://github.com/tonioloewald/react-xinjs#readme) | [npm](https://www.npmjs.com/package/react-tosijs) | [tosijs](https://tosijs.net) | [discord](https://discord.gg/ramJ9rgky5)
 
-This is a tiny helper module for integrating tosijs with React (or vice versa).
+This is a tiny helper module for integrating tosijs with [React](https://reactjs.org) (or vice versa).
 
 It provides two very useful things:
 
