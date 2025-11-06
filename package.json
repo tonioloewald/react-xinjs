@@ -1,12 +1,17 @@
 {
   "name": "react-tosijs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Incredibly simple, powerful, and efficient state management for React…",
   "exports": {
     "import": "./dist/index.js",
     "default": "./dist/index.js",
     "types": "./dist/index.d.ts"
   },
+  "files": [
+    "/dist",
+    "/LICENSE",
+    "/README.md"
+  ],
   "scripts": {
     "start": "bun dev.ts"
   },
