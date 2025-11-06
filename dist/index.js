@@ -1,41 +1,4 @@
-var $8zHUo$react = require("react");
-var $8zHUo$tosijs = require("tosijs");
+import{useState as G,useEffect as H,createElement as I}from"react";import{xin as A,observe as J,unobserve as K,xinPath as L}from"tosijs";var M=function(m,q){let w=typeof m==="string"?m:L(m);if(typeof w!=="string")throw console.error("useXin must either be passed a path or a XinProxy",m),Error("useXin must either be passed a path or a XinProxy");let[z,B]=G(A[w]!==void 0?A[w]:q);return H(()=>{let F=J(w,()=>{B(A[w])});return()=>{K(F)}}),[z,(D)=>{A[w]=D}]},Y=M,Z=new Proxy({},{get(m,q){if(typeof q!=="string")return m[q];if(!m[q]){let w=q.replace(/([a-z])([A-Z])/g,(z,B,C)=>{return B+"-"+C.toLocaleLowerCase()});m[q]=(z)=>I(w,z)}return m[q]}});var $="1.0.1";export{$ as version,Y as useXin,M as useTosi,Z as reactWebComponents};
 
-
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
-
-$parcel$export(module.exports, "useXin", () => $293bb70d51fcc769$export$4c67395f0a5595d5);
-
-
-const $293bb70d51fcc769$export$5516bd16893e35e = function(observed, initialValue) {
-    const path = typeof observed === "string" ? observed : (0, $8zHUo$tosijs.xinPath)(observed);
-    if (typeof path !== "string") {
-        console.error("useXin must either be passed a path or a XinProxy", observed);
-        throw new Error("useXin must either be passed a path or a XinProxy");
-    }
-    const [value, update] = (0, $8zHUo$react.useState)((0, $8zHUo$tosijs.xin)[path] !== undefined ? (0, $8zHUo$tosijs.xin)[path] : initialValue);
-    (0, $8zHUo$react.useEffect)(()=>{
-        const observer = ()=>{
-            update((0, $8zHUo$tosijs.xin)[path]);
-        };
-        const listener = (0, $8zHUo$tosijs.observe)(path, observer);
-        return ()=>{
-            (0, $8zHUo$tosijs.unobserve)(listener);
-        };
-    });
-    const setValue = (value)=>{
-        (0, $8zHUo$tosijs.xin)[path] = value;
-    };
-    return [
-        value,
-        setValue
-    ];
-};
-const $293bb70d51fcc769$export$4c67395f0a5595d5 = $293bb70d51fcc769$export$5516bd16893e35e;
-
-
-
-
+//# debugId=D4632B3D65A3A98C64756E2164756E21
 //# sourceMappingURL=index.js.map

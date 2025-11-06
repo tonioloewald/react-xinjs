@@ -1,4 +1,10 @@
-import { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  createElement,
+  FunctionComponent,
+  ComponentPropsWithRef,
+} from "react";
 import { xin, observe, unobserve, xinPath, XinTouchableType } from "tosijs";
 
 type HookType<T = any> = [value: T, setValue: (newValue: T) => void];
@@ -37,3 +43,35 @@ export const useTosi = function <T = any>(
 };
 
 export const useXin = useTosi;
+
+export type WebComponent<
+  P extends object = {},
+  E extends HTMLElement = HTMLElement,
+> = FunctionComponent<
+  ComponentPropsWithRef<"div"> & P & { ref?: React.Ref<E> }
+>;
+
+type WebComponentProxy = Record<string, WebComponent>;
+
+export const reactWebComponents: WebComponentProxy = new Proxy(
+  {} as WebComponentProxy,
+  {
+    get(target, key): WebComponent {
+      if (typeof key !== "string") {
+        return (target as any)[key];
+      }
+
+      if (!target[key]) {
+        const tagName = key.replace(
+          /([a-z])([A-Z])/g,
+          (_: string, first: string, last: string): string => {
+            return first + "-" + last.toLocaleLowerCase();
+          },
+        );
+        target[key] = (props: any) =>
+          createElement<any, Element>(tagName, props);
+      }
+      return target[key];
+    },
+  },
+);

@@ -1,0 +1,100 @@
+:root {
+  --bg: #fdfdfd;
+  --body-bg: #ddd;
+  --accent-color: #47f;
+  --shadow-color: #00000040;
+  --font-size: 15px;
+  --line-height: 20px;
+  --whitespace: 10px;
+  --whitespace-50: calc(var(--whitespace) * 0.5);
+  --whitespace-200: calc(var(--whitespace) * 2);
+  --rounding-50: 2.5px;
+  --rounding: 5px;
+  --rounding-200: 10px;
+  --border-shadow: 0 0 0 1px var(--shadow-color);
+  --widget-height: calc(var(--line-height) + var(--whitespace));
+}
+
+input,
+button {
+  padding: var(--whitespace-50) var(--whitespace);
+  min-width: var(--widget-height);
+  line-height: var(--line-height);
+  font-size: var(--font-size);
+  flex-shrink: 0;
+  box-shadow: var(--border-shadow);
+  max-height: var(--wiget-height);
+}
+
+input {
+  border-radius: var(--rounding-50);
+  border: 0;
+}
+
+button {
+  border-radius: var(--rounding);
+  border: 0;
+}
+
+button:hover {
+  box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+button:active {
+  background: var(--accent-color);
+  color: var(--bg);
+}
+
+body {
+  background: var(--body-bg);
+  font-size: var(--font-size);
+}
+
+.App {
+  font-family: sans-serif;
+  background: var(--bg);
+  max-width: 400px;
+  margin: auto;
+  margin-top: var(--whitespace-200);
+  padding: var(--whitespace-200);
+  border-radius: var(--rounding-200);
+  box-shadow: 0 4px 8px #00000040;
+}
+
+.elastic {
+  flex: 1 1 auto;
+}
+
+.App > * + * {
+  margin-top: 20px;
+}
+
+.App h1 {
+  margin: 0;
+  text-align: center;
+}
+
+.List {
+  display: flex;
+  flex-direction: column;
+  gap: var(--whitespace-50);
+}
+
+.ListItem {
+  display: flex;
+  gap: var(--whitespace);
+  align-items: center;
+}
+
+.ListItem > * {
+  line-height: var(--line-height);
+}
+
+.ListItem > span {
+  padding: var(--whitespace-50);
+}
+
+.Editor {
+  display: flex;
+  gap: var(--whitespace);
+}
