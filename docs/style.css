@@ -56,8 +56,26 @@ button:hover {
 }
 
 button:active {
-  background: var(--accent-color);
   color: #fff;
+}
+
+button:active::after {
+  content: " ";
+  border-radius: inherit;
+  position: absolute;
+  background: var(--accent-color);
+  animation: growInset 0.2s ease-out forwards;
+  z-index: -1;
+}
+
+@keyframes growInset {
+  0% {
+    inset: 50% 50%;
+  }
+
+  100% {
+    inset: 0%;
+  }
 }
 
 body {
