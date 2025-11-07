@@ -1,4 +1,54 @@
-import{useState as G,useEffect as H,createElement as I}from"react";import{xin as A,observe as J,unobserve as K,xinPath as L}from"tosijs";var M=function(m,q){let w=typeof m==="string"?m:L(m);if(typeof w!=="string")throw console.error("useXin must either be passed a path or a XinProxy",m),Error("useXin must either be passed a path or a XinProxy");let[z,B]=G(A[w]!==void 0?A[w]:q);return H(()=>{let F=J(w,()=>{B(A[w])});return()=>{K(F)}}),[z,(D)=>{A[w]=D}]},Y=M,Z=new Proxy({},{get(m,q){if(typeof q!=="string")return m[q];if(!m[q]){let w=q.replace(/([a-z])([A-Z])/g,(z,B,C)=>{return B+"-"+C.toLocaleLowerCase()});m[q]=(z)=>I(w,z)}return m[q]}});var $="1.0.2";export{$ as version,Y as useXin,M as useTosi,Z as reactWebComponents};
+// src/use-tosi.ts
+import {
+  useState,
+  useEffect,
+  createElement
+} from "react";
+import { xin, observe, unobserve, xinPath } from "tosijs";
+var useTosi = function(observed, initialValue) {
+  const path = typeof observed === "string" ? observed : xinPath(observed);
+  if (typeof path !== "string") {
+    console.error("useXin must either be passed a path or a XinProxy", observed);
+    throw new Error("useXin must either be passed a path or a XinProxy");
+  }
+  const [value, update] = useState(xin[path] !== undefined ? xin[path] : initialValue);
+  useEffect(() => {
+    const observer = () => {
+      update(xin[path]);
+    };
+    const listener = observe(path, observer);
+    return () => {
+      unobserve(listener);
+    };
+  });
+  const setValue = (value2) => {
+    xin[path] = value2;
+  };
+  return [value, setValue];
+};
+var useXin = useTosi;
+var reactWebComponents = new Proxy({}, {
+  get(target, key) {
+    if (typeof key !== "string") {
+      return target[key];
+    }
+    const tagName = key.replace(/([a-z])([A-Z])/g, (_, first, last) => {
+      return first + "-" + last.toLocaleLowerCase();
+    });
+    if (!target[tagName]) {
+      target[tagName] = (props) => createElement(tagName, props);
+    }
+    return target[tagName];
+  }
+});
+// src/version.ts
+var version = "1.0.2";
+export {
+  version,
+  useXin,
+  useTosi,
+  reactWebComponents
+};
 
-//# debugId=8828996F6710F34064756E2164756E21
+//# debugId=CBD1B1F7DB72F54B64756E2164756E21
 //# sourceMappingURL=index.js.map

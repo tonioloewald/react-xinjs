@@ -43,7 +43,7 @@ async function build() {
     outdir: DIST,
     sourcemap: "linked",
     format: "esm",
-    minify: true,
+    // minify: true,
     external: ["tosijs", "react"],
   });
   if (!result.success) {

@@ -25111,33 +25111,41 @@ var to = In.elementCreator({ tag: "xin-loader", styleSpec: { ":host": { display:
 
 // dist/index.js
 var import_react = __toESM(require_react(), 1);
-var M2 = function(m2, q2) {
-  let w2 = typeof m2 === "string" ? m2 : M(m2);
-  if (typeof w2 !== "string")
-    throw console.error("useXin must either be passed a path or a XinProxy", m2), Error("useXin must either be passed a path or a XinProxy");
-  let [z2, B2] = import_react.useState(f[w2] !== undefined ? f[w2] : q2);
-  return import_react.useEffect(() => {
-    let F2 = Z(w2, () => {
-      B2(f[w2]);
-    });
-    return () => {
-      G(F2);
-    };
-  }), [z2, (D2) => {
-    f[w2] = D2;
-  }];
-};
-var Z2 = new Proxy({}, { get(m2, q2) {
-  if (typeof q2 !== "string")
-    return m2[q2];
-  if (!m2[q2]) {
-    let w2 = q2.replace(/([a-z])([A-Z])/g, (z2, B2, C2) => {
-      return B2 + "-" + C2.toLocaleLowerCase();
-    });
-    m2[q2] = (z2) => import_react.createElement(w2, z2);
+var useTosi = function(observed, initialValue) {
+  const path = typeof observed === "string" ? observed : M(observed);
+  if (typeof path !== "string") {
+    console.error("useXin must either be passed a path or a XinProxy", observed);
+    throw new Error("useXin must either be passed a path or a XinProxy");
   }
-  return m2[q2];
-} });
+  const [value, update] = import_react.useState(f[path] !== undefined ? f[path] : initialValue);
+  import_react.useEffect(() => {
+    const observer = () => {
+      update(f[path]);
+    };
+    const listener = Z(path, observer);
+    return () => {
+      G(listener);
+    };
+  });
+  const setValue = (value2) => {
+    f[path] = value2;
+  };
+  return [value, setValue];
+};
+var reactWebComponents = new Proxy({}, {
+  get(target, key) {
+    if (typeof key !== "string") {
+      return target[key];
+    }
+    const tagName = key.replace(/([a-z])([A-Z])/g, (_2, first, last) => {
+      return first + "-" + last.toLocaleLowerCase();
+    });
+    if (!target[tagName]) {
+      target[tagName] = (props) => import_react.createElement(tagName, props);
+    }
+    return target[tagName];
+  }
+});
 
 // demo/src/todo.tsx
 var jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
@@ -25163,7 +25171,7 @@ var { app } = jn({
 });
 window.app = app;
 var List = () => {
-  const [todos] = M2(app.todos);
+  const [todos] = useTosi(app.todos);
   return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
     className: "List",
     children: todos.map((item) => /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
@@ -25185,8 +25193,8 @@ var List = () => {
   }, undefined, false, undefined, this);
 };
 var Editor = () => {
-  const [reminder, setReminder] = M2("app.newItem.reminder");
-  const [id] = M2("app.newItem.id");
+  const [reminder, setReminder] = useTosi("app.newItem.reminder");
+  const [id] = useTosi("app.newItem.id");
   return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("form", {
     className: "Editor",
     onSubmit: app.addItem,
@@ -25208,7 +25216,7 @@ var Editor = () => {
   }, undefined, true, undefined, this);
 };
 var App = () => {
-  const [name] = M2("app.name");
+  const [name] = useTosi("app.name");
   return /* @__PURE__ */ jsx_dev_runtime.jsxDEV("div", {
     className: "App",
     children: [
@@ -25227,10 +25235,10 @@ function L2() {
   return { async: false, breaks: false, extensions: null, gfm: true, hooks: null, pedantic: false, renderer: null, silent: false, tokenizer: null, walkTokens: null };
 }
 var T2 = L2();
-function G3(u) {
+function G2(u) {
   T2 = u;
 }
-var I3 = { exec: () => null };
+var I2 = { exec: () => null };
 function h(u, e = "") {
   let t = typeof u == "string" ? u : u.source, n = { replace: (r, i) => {
     let s = typeof i == "string" ? i : i.source;
@@ -25258,10 +25266,10 @@ var U2 = /<!--(?:-?>|[\s\S]*?(?:-->|$))/;
 var $e2 = h("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n[ \t]*)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ \t]*)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ \t]*)+\\n|$))", "i").replace("comment", U2).replace("tag", v2).replace("attribute", / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex();
 var ae2 = h(j2).replace("hr", E).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("|table", "").replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", v2).getRegex();
 var _e2 = h(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph", ae2).getRegex();
-var K2 = { blockquote: _e2, code: Re2, def: Pe2, fences: Te2, heading: Oe2, hr: E, html: $e2, lheading: oe2, list: Se2, newline: be2, paragraph: ae2, table: I3, text: ye2 };
+var K2 = { blockquote: _e2, code: Re2, def: Pe2, fences: Te2, heading: Oe2, hr: E, html: $e2, lheading: oe2, list: Se2, newline: be2, paragraph: ae2, table: I2, text: ye2 };
 var re2 = h("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr", E).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("blockquote", " {0,3}>").replace("code", "(?: {4}| {0,3}\t)[^\\n]").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", v2).getRegex();
 var Le2 = { ...K2, lheading: we, table: re2, paragraph: h(j2).replace("hr", E).replace("heading", " {0,3}#{1,6}(?:\\s|$)").replace("|lheading", "").replace("table", re2).replace("blockquote", " {0,3}>").replace("fences", " {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list", " {0,3}(?:[*+-]|1[.)]) ").replace("html", "</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag", v2).getRegex() };
-var Me2 = { ...K2, html: h(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", U2).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(), def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/, heading: /^(#{1,6})(.*)(?:\n+|$)/, fences: I3, lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/, paragraph: h(j2).replace("hr", E).replace("heading", ` *#{1,6} *[^
+var Me2 = { ...K2, html: h(`^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:"[^"]*"|'[^']*'|\\s[^'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))`).replace("comment", U2).replace(/tag/g, "(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(), def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/, heading: /^(#{1,6})(.*)(?:\n+|$)/, fences: I2, lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/, paragraph: h(j2).replace("hr", E).replace("heading", ` *#{1,6} *[^
 ]`).replace("lheading", oe2).replace("|table", "").replace("blockquote", " {0,3}>").replace("|fences", "").replace("|list", "").replace("|html", "").replace("|tag", "").getRegex() };
 var ze2 = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/;
 var Ae2 = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/;
@@ -25292,12 +25300,12 @@ var de2 = h(/^!?\[(label)\]\[(ref)\]/).replace("label", q2).replace("ref", Q2).g
 var ke2 = h(/^!?\[(ref)\](?:\[\])?/).replace("ref", Q2).getRegex();
 var Ke2 = h("reflink|nolink(?!\\()", "g").replace("reflink", de2).replace("nolink", ke2).getRegex();
 var se2 = /[hH][tT][tT][pP][sS]?|[fF][tT][pP]/;
-var X2 = { _backpedal: I3, anyPunctuation: Ne2, autolink: Fe2, blockSkip: qe, br: le2, code: Ae2, del: I3, emStrongLDelim: ve2, emStrongRDelimAst: He2, emStrongRDelimUnd: Ge2, escape: ze2, link: Ue2, nolink: ke2, punctuation: Ee2, reflink: de2, reflinkSearch: Ke2, tag: Qe, text: Ie2, url: I3 };
+var X2 = { _backpedal: I2, anyPunctuation: Ne2, autolink: Fe2, blockSkip: qe, br: le2, code: Ae2, del: I2, emStrongLDelim: ve2, emStrongRDelimAst: He2, emStrongRDelimUnd: Ge2, escape: ze2, link: Ue2, nolink: ke2, punctuation: Ee2, reflink: de2, reflinkSearch: Ke2, tag: Qe, text: Ie2, url: I2 };
 var We2 = { ...X2, link: h(/^!?\[(label)\]\((.*?)\)/).replace("label", q2).getRegex(), reflink: h(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label", q2).getRegex() };
 var N2 = { ...X2, emStrongRDelimAst: Ze2, emStrongLDelim: De2, url: h(/^((?:protocol):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/).replace("protocol", se2).replace("email", /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(), _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/, del: /^(~~?)(?=[^\s~])((?:\\[\s\S]|[^\\])*?(?:\\[\s\S]|[^\s~\\]))\1(?=[^~]|$)/, text: h(/^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|protocol:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/).replace("protocol", se2).getRegex() };
 var Xe2 = { ...N2, br: h(le2).replace("{2,}", "*").getRegex(), text: h(N2.text).replace("\\b_", "\\b_| {2,}\\n").replace(/\{2,\}/g, "*").getRegex() };
 var C2 = { normal: K2, gfm: Le2, pedantic: Me2 };
-var M3 = { normal: X2, gfm: N2, breaks: Xe2, pedantic: We2 };
+var M2 = { normal: X2, gfm: N2, breaks: Xe2, pedantic: We2 };
 var Je2 = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
 var ge2 = (u) => Je2[u];
 function w2(u, e) {
@@ -25485,15 +25493,15 @@ ${p}` : p;
           break;
         c = t[0], e = e.substring(c.length);
         let g2 = t[2].split(`
-`, 1)[0].replace(this.rules.other.listReplaceTabs, (H3) => " ".repeat(3 * H3.length)), d = e.split(`
+`, 1)[0].replace(this.rules.other.listReplaceTabs, (H2) => " ".repeat(3 * H2.length)), d = e.split(`
 `, 1)[0], R = !g2.trim(), f2 = 0;
         if (this.options.pedantic ? (f2 = 2, p = g2.trimStart()) : R ? f2 = t[1].length + 1 : (f2 = t[2].search(this.rules.other.nonSpaceChar), f2 = f2 > 4 ? 1 : f2, p = g2.slice(f2), f2 += t[1].length), R && this.rules.other.blankLine.test(d) && (c += d + `
 `, e = e.substring(d.length + 1), l = true), !l) {
-          let H3 = this.rules.other.nextBulletRegex(f2), ee2 = this.rules.other.hrRegex(f2), te2 = this.rules.other.fencesBeginRegex(f2), ne2 = this.rules.other.headingBeginRegex(f2), xe2 = this.rules.other.htmlBeginRegex(f2);
+          let H2 = this.rules.other.nextBulletRegex(f2), ee2 = this.rules.other.hrRegex(f2), te2 = this.rules.other.fencesBeginRegex(f2), ne2 = this.rules.other.headingBeginRegex(f2), xe2 = this.rules.other.htmlBeginRegex(f2);
           for (;e; ) {
-            let Z3 = e.split(`
+            let Z2 = e.split(`
 `, 1)[0], A2;
-            if (d = Z3, this.options.pedantic ? (d = d.replace(this.rules.other.listReplaceNesting, "  "), A2 = d) : A2 = d.replace(this.rules.other.tabCharGlobal, "    "), te2.test(d) || ne2.test(d) || xe2.test(d) || H3.test(d) || ee2.test(d))
+            if (d = Z2, this.options.pedantic ? (d = d.replace(this.rules.other.listReplaceNesting, "  "), A2 = d) : A2 = d.replace(this.rules.other.tabCharGlobal, "    "), te2.test(d) || ne2.test(d) || xe2.test(d) || H2.test(d) || ee2.test(d))
               break;
             if (A2.search(this.rules.other.nonSpaceChar) >= f2 || !d.trim())
               p += `
@@ -25504,8 +25512,8 @@ ${p}` : p;
               p += `
 ` + d;
             }
-            !R && !d.trim() && (R = true), c += Z3 + `
-`, e = e.substring(Z3.length + 1), g2 = A2.slice(f2);
+            !R && !d.trim() && (R = true), c += Z2 + `
+`, e = e.substring(Z2.length + 1), g2 = A2.slice(f2);
           }
         }
         i.loose || (o ? i.loose = true : this.rules.other.doubleBlankLine.test(c) && (o = true));
@@ -25709,11 +25717,11 @@ var x = class u {
   inlineQueue;
   constructor(e) {
     this.tokens = [], this.tokens.links = Object.create(null), this.options = e || T2, this.options.tokenizer = this.options.tokenizer || new y, this.tokenizer = this.options.tokenizer, this.tokenizer.options = this.options, this.tokenizer.lexer = this, this.inlineQueue = [], this.state = { inLink: false, inRawBlock: false, top: true };
-    let t = { other: m2, block: C2.normal, inline: M3.normal };
-    this.options.pedantic ? (t.block = C2.pedantic, t.inline = M3.pedantic) : this.options.gfm && (t.block = C2.gfm, this.options.breaks ? t.inline = M3.breaks : t.inline = M3.gfm), this.tokenizer.rules = t;
+    let t = { other: m2, block: C2.normal, inline: M2.normal };
+    this.options.pedantic ? (t.block = C2.pedantic, t.inline = M2.pedantic) : this.options.gfm && (t.block = C2.gfm, this.options.breaks ? t.inline = M2.breaks : t.inline = M2.gfm), this.tokenizer.rules = t;
   }
   static get rules() {
-    return { block: C2, inline: M3 };
+    return { block: C2, inline: M2 };
   }
   static lex(e, t) {
     return new u(t).lex(e);
@@ -26432,12 +26440,12 @@ function k(u3, e) {
   return _2.parse(u3, e);
 }
 k.options = k.setOptions = function(u3) {
-  return _2.setOptions(u3), k.defaults = _2.defaults, G3(k.defaults), k;
+  return _2.setOptions(u3), k.defaults = _2.defaults, G2(k.defaults), k;
 };
 k.getDefaults = L2;
 k.defaults = T2;
 k.use = function(...u3) {
-  return _2.use(...u3), k.defaults = _2.defaults, G3(k.defaults), k;
+  return _2.use(...u3), k.defaults = _2.defaults, G2(k.defaults), k;
 };
 k.walkTokens = function(u3, e) {
   return _2.walkTokens(u3, e);
@@ -26903,7 +26911,7 @@ var z3 = (e, t, i = "move") => {
     V3.addEventListener("mousemove", l, me3), V3.addEventListener("mouseup", l, me3);
   } else if (e instanceof TouchEvent) {
     let s = e.changedTouches[0], n = s.identifier, l = s.clientX, a2 = s.clientY, r = e.target, p = 0, h2 = 0, d = (g2) => {
-      let v3 = [...g2.touches].find((H3) => H3.identifier === n);
+      let v3 = [...g2.touches].find((H2) => H2.identifier === n);
       if (v3 !== undefined)
         p = v3.clientX - l, h2 = v3.clientY - a2;
       if (g2.type === "touchmove")
@@ -26979,8 +26987,8 @@ var bt = (e) => {
 };
 var Ki = (e, t, i, o, s, n = false) => {
   {
-    let { position: H3 } = getComputedStyle(e);
-    if (H3 !== "fixed")
+    let { position: H2 } = getComputedStyle(e);
+    if (H2 !== "fixed")
       e.style.position = "fixed";
     if (s)
       e.remainOnResize = s;
@@ -26995,8 +27003,8 @@ var Ki = (e, t, i, o, s, n = false) => {
   else if (i === "auto" || i === undefined)
     i = (d < v3 * 0.5 ? "s" : "n") + (h2 < g2 * 0.5 ? "e" : "w");
   if (e.style.top = e.style.left = e.style.right = e.style.bottom = e.style.transform = "", i.length === 2) {
-    let [H3, ne2] = i;
-    switch (H3) {
+    let [H2, ne2] = i;
+    switch (H2) {
       case "n":
         e.style.bottom = (v3 - a2).toFixed(2) + "px";
         break;
@@ -27056,7 +27064,7 @@ var Ct = (e, t) => {
   });
 };
 
-class Z3 extends B {
+class Z2 extends B {
   editable = false;
   showIcon = false;
   hideCaption = false;
@@ -27175,11 +27183,11 @@ class Z3 extends B {
     i.replaceWith(s), e.setAttribute("placeholder", this.localized ? f2(this.placeholder) : this.placeholder), e.style.pointerEvents = this.editable ? "" : "none", e.readOnly = !this.editable;
   }
 }
-var T3 = Z3.elementCreator({ tag: "xin-select", styleSpec: { ":host": { "--gap": "8px", "--touch-size": "44px", "--padding": "0 8px", "--value-padding": "0 8px", "--icon-width": "24px", "--fieldWidth": "140px", display: "inline-flex", position: "relative" }, ":host button": { display: "flex", alignItems: "center", justifyItems: "center", gap: On.gap, textAlign: "left", height: On.touchSize, padding: On.padding, position: "relative", width: "100%" }, ":host:not([show-icon]) button > :first-child": { display: "none" }, ":host[hide-caption] button > :nth-child(2)": { display: "none" }, ':host [part="value"]': { width: On.fieldWidth, padding: On.valuePadding, height: On.touchSize, lineHeight: On.touchSize, boxShadow: "none", whiteSpace: "nowrap", outline: "none", background: "transparent", flex: "1" }, ':host [part="value"]:not(:focus)': { overflow: "hidden", textOverflow: "ellipsis", background: "transparent" } } });
+var T3 = Z2.elementCreator({ tag: "xin-select", styleSpec: { ":host": { "--gap": "8px", "--touch-size": "44px", "--padding": "0 8px", "--value-padding": "0 8px", "--icon-width": "24px", "--fieldWidth": "140px", display: "inline-flex", position: "relative" }, ":host button": { display: "flex", alignItems: "center", justifyItems: "center", gap: On.gap, textAlign: "left", height: On.touchSize, padding: On.padding, position: "relative", width: "100%" }, ":host:not([show-icon]) button > :first-child": { display: "none" }, ":host[hide-caption] button > :nth-child(2)": { display: "none" }, ':host [part="value"]': { width: On.fieldWidth, padding: On.valuePadding, height: On.touchSize, lineHeight: On.touchSize, boxShadow: "none", whiteSpace: "nowrap", outline: "none", background: "transparent", flex: "1" }, ':host [part="value"]:not(:focus)': { overflow: "hidden", textOverflow: "ellipsis", background: "transparent" } } });
 var { span: zt } = m;
 var { i18n: b3 } = be({ i18n: { locale: window.navigator.language, locales: [window.navigator.language], languages: [window.navigator.language], emoji: [""], stringMap: {}, localeOptions: [{ icon: zt(), caption: window.navigator.language, value: window.navigator.language }] } });
 tn.localeOptions = { toDOM(e, t) {
-  if (e instanceof Z3)
+  if (e instanceof Z2)
     e.options = t;
 } };
 var Bt = () => {
@@ -28286,18 +28294,18 @@ class Ce3 extends B {
 }
 var sl = Xe3.elementCreator({ tag: "xin-field", styleSpec: { ':host [part="field"]': { position: "relative", display: "flex", alignItems: "center", gap: sn.prefixSuffixGap("8px") }, ':host [part="field"][prefix]::before': { content: "attr(prefix)" }, ':host [part="field"][suffix]::after': { content: "attr(suffix)" }, ':host [part="field"] > *, :host [part="input"] > *': { width: "100%" }, ":host textarea": { resize: "none" }, ':host input[type="checkbox"]': { width: "fit-content" }, ":host .hidden": { position: "absolute", pointerEvents: "none", opacity: 0 } } });
 var nl = Ce3.elementCreator({ tag: "xin-form" });
-var { div: G4, slot: Zt2, span: Xo, button: Zo } = m;
+var { div: G3, slot: Zt2, span: Xo, button: Zo } = m;
 
 class Yt extends B {
   value = 0;
   localized = false;
   makeTab(e, t, i) {
     let o = t.getAttribute("name"), s = t.querySelector('template[role="tab"]')?.content.cloneNode(true) || (this.localized ? Y2(o) : Xo(o));
-    return G4(s, { part: "tab", tabindex: 0, role: "tab", ariaControls: i }, t.hasAttribute("data-close") ? Zo({ title: "close", class: "close" }, c.x()) : {});
+    return G3(s, { part: "tab", tabindex: 0, role: "tab", ariaControls: i }, t.hasAttribute("data-close") ? Zo({ title: "close", class: "close" }, c.x()) : {});
   }
   static styleSpec = { ":host": { display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", boxShadow: "none !important" }, slot: { position: "relative", display: "block", flex: "1", overflow: "hidden", overflowY: "auto" }, 'slot[name="after-tabs"]': { flex: "0 0 auto" }, "::slotted([hidden])": { display: "none !important" }, ":host::part(tabpanel)": { display: "flex", flexDirection: "column", overflowX: "auto" }, ":host::part(tabrow)": { display: "flex" }, ":host .tabs": { display: "flex", userSelect: "none", whiteSpace: "nowrap" }, ":host .tabs > div": { padding: `${On.spacing50} ${On.spacing}`, cursor: "default", display: "flex", alignItems: "baseline" }, ':host .tabs > [aria-selected="true"]': { "--text-color": On.xinTabsSelectedColor, color: On.textColor }, ":host .elastic": { flex: "1" }, ":host .border": { background: "var(--xin-tabs-bar-color, #ccc)" }, ":host .border > .selected": { content: " ", width: 0, height: "var(--xin-tabs-bar-height, 2px)", background: On.xinTabsSelectedColor, transition: "ease-out 0.2s" }, ":host button.close": { border: 0, background: "transparent", textAlign: "center", marginLeft: On.spacing50, padding: 0 }, ":host button.close > svg": { height: "12px" } };
   onCloseTab = null;
-  content = [G4({ role: "tabpanel", part: "tabpanel" }, G4({ part: "tabrow" }, G4({ class: "tabs", part: "tabs" }), G4({ class: "elastic" }), Zt2({ name: "after-tabs" })), G4({ class: "border" }, G4({ class: "selected", part: "selected" }))), Zt2()];
+  content = [G3({ role: "tabpanel", part: "tabpanel" }, G3({ part: "tabrow" }, G3({ class: "tabs", part: "tabs" }), G3({ class: "elastic" }), Zt2({ name: "after-tabs" })), G3({ class: "border" }, G3({ class: "selected", part: "selected" }))), Zt2()];
   constructor() {
     super();
     this.initAttributes("localized");
@@ -28873,29 +28881,29 @@ class ai extends B {
     this.days = [];
     let v3 = new Date().toISOString().split("T")[0];
     for (let w3 = r.valueOf();w3 <= d.valueOf(); w3 += he3) {
-      let M4 = new Date(w3), O2 = M4.toISOString().split("T")[0];
-      this.days.push({ date: M4, selected: false, inMonth: M4.getMonth() + 1 === this.month, isToday: O2 === v3, isWeekend: M4.getDay() % 6 === 0, inRange: !!(this.from && O2 >= this.from && O2 <= this.to) });
+      let M3 = new Date(w3), O2 = M3.toISOString().split("T")[0];
+      this.days.push({ date: M3, selected: false, inMonth: M3.getMonth() + 1 === this.month, isToday: O2 === v3, isWeekend: M3.getDay() % 6 === 0, inRange: !!(this.from && O2 >= this.from && O2 <= this.to) });
     }
     o.value = String(this.month), s.value = String(this.year);
     let ne2 = (o.disabled = s.disabled = i.disabled = n.disabled = l.disabled = this.disabled || this.readonly) || !this.selectable && !this.range && !this.multiple;
     s.options = this.years, e.textContent = "", e.append(...g2.map((w3) => Me3({ class: "day" }, w3))), t.textContent = "";
     let Se3 = null, { to: zi, from: Bi } = this;
     if (t.append(...this.days.map((w3) => {
-      let M4 = ["date"];
+      let M3 = ["date"];
       if (w3.inMonth)
-        M4.push("in-month");
+        M3.push("in-month");
       if (w3.isToday)
-        M4.push("today");
+        M3.push("today");
       let O2 = w3.date.toISOString().split("T")[0];
       if (this.checkDay(O2))
-        M4.push("checked");
-      if (M4.push(w3.isWeekend ? "weekend" : "weekday"), this.range) {
+        M3.push("checked");
+      if (M3.push(w3.isWeekend ? "weekend" : "weekday"), this.range) {
         if (zi === O2)
-          M4.push("range-end");
+          M3.push("range-end");
         if (Bi === O2)
-          M4.push("range-start");
+          M3.push("range-start");
       }
-      let at = Me3({ class: M4.join(" "), title: O2, onClick: this.clickDate, onKeydown: this.keyDate, tabindex: "0" }, w3.date.getDate());
+      let at = Me3({ class: M3.join(" "), title: O2, onClick: this.clickDate, onKeydown: this.keyDate, tabindex: "0" }, w3.date.getDate());
       if (O2 === this.#e)
         Se3 = at;
       return at;
@@ -28927,14 +28935,14 @@ class se3 extends B {
       if (s)
         s();
       se3.removeNote(v3);
-    }, g2 = l instanceof SVGElement ? l : l ? c[l]({ class: "icon" }) : c.info({ class: "icon" }), v3 = it({ class: `note ${o}`, style: { _notificationAccentColor: p } }, g2, it({ class: "message" }, it(t), h2), gs({ class: "close", title: "close", apply(H3) {
-      H3.addEventListener("click", d);
+    }, g2 = l instanceof SVGElement ? l : l ? c[l]({ class: "icon" }) : c.info({ class: "icon" }), v3 = it({ class: `note ${o}`, style: { _notificationAccentColor: p } }, g2, it({ class: "message" }, it(t), h2), gs({ class: "close", title: "close", apply(H2) {
+      H2.addEventListener("click", d);
     } }, c.x()));
     if (r.shadowRoot.append(v3), h2 instanceof HTMLProgressElement && n instanceof Function) {
       h2.setAttribute("max", String(100)), h2.value = n();
-      let H3 = setInterval(() => {
+      let H2 = setInterval(() => {
         if (!r.shadowRoot.contains(v3)) {
-          clearInterval(H3);
+          clearInterval(H2);
           return;
         }
         let ne2 = n();
@@ -29091,11 +29099,11 @@ function ui(e = Es) {
 function ye3(e = "10px") {
   return hi({ slot: "toolbar", style: { flex: `0 0 ${e}`, content: " " } });
 }
-function I4(e, t, i) {
+function I3(e, t, i) {
   return As({ slot: "toolbar", dataCommand: t, title: e }, i);
 }
-var Hs = () => [I4("left-justify", "justifyLeft", c.alignLeft()), I4("center", "justifyCenter", c.alignCenter()), I4("right-justify", "justifyRight", c.alignRight()), ye3(), I4("bullet list", "insertUnorderedList", c.listBullet()), I4("numbered list", "insertOrderedList", c.listNumber()), ye3(), I4("indent", "indent", c.indent()), I4("indent", "outdent", c.outdent())];
-var yi = () => [I4("bold", "bold", c.fontBold()), I4("italic", "italic", c.fontItalic()), I4("underline", "underline", c.fontUnderline())];
+var Hs = () => [I3("left-justify", "justifyLeft", c.alignLeft()), I3("center", "justifyCenter", c.alignCenter()), I3("right-justify", "justifyRight", c.alignRight()), ye3(), I3("bullet list", "insertUnorderedList", c.listBullet()), I3("numbered list", "insertOrderedList", c.listNumber()), ye3(), I3("indent", "indent", c.indent()), I3("indent", "outdent", c.outdent())];
+var yi = () => [I3("bold", "bold", c.fontBold()), I3("italic", "italic", c.fontItalic()), I3("underline", "underline", c.fontUnderline())];
 var Ts = () => [ui(), ye3(), ...yi()];
 var Ps = () => [ui(), ye3(), ...Hs(), ye3(), ...yi()];
 
@@ -29141,7 +29149,7 @@ class xi extends B {
   }
   selectionChange = () => {};
   handleSelectChange = (e) => {
-    let t = e.target.closest(Z3.tagName);
+    let t = e.target.closest(Z2.tagName);
     if (t == null)
       return;
     this.doCommand(t.value);
@@ -29510,8 +29518,8 @@ var Na = Mi.elementCreator({ tag: "xin-tag-list", styleSpec: { ":host": { "--tag
 // demo/src/index.tsx
 var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
 var container = document.querySelector("main");
-var BodyMovin = Z2.xinLottie;
-var Markdown = Z2.xinMd;
+var BodyMovin = reactWebComponents.xinLottie;
+var Markdown = reactWebComponents.xinMd;
 var root = import_client.default.createRoot(container);
 root.render(/* @__PURE__ */ jsx_dev_runtime2.jsxDEV(jsx_dev_runtime2.Fragment, {
   children: /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {

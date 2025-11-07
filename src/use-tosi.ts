@@ -61,17 +61,19 @@ export const reactWebComponents: WebComponentProxy = new Proxy(
         return (target as any)[key];
       }
 
-      if (!target[key]) {
-        const tagName = key.replace(
-          /([a-z])([A-Z])/g,
-          (_: string, first: string, last: string): string => {
-            return first + "-" + last.toLocaleLowerCase();
-          },
-        );
-        target[key] = (props: any) =>
+      const tagName = key.replace(
+        /([a-z])([A-Z])/g,
+        (_: string, first: string, last: string): string => {
+          return first + "-" + last.toLocaleLowerCase();
+        },
+      );
+
+      if (!target[tagName]) {
+        target[tagName] = (props: any) =>
           createElement<any, Element>(tagName, props);
       }
-      return target[key];
+
+      return target[tagName];
     },
   },
 );
