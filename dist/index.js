@@ -42,7 +42,7 @@ var reactWebComponents = new Proxy({}, {
   }
 });
 // src/version.ts
-var version = "1.0.2";
+var version = "1.0.3";
 export {
   version,
   useXin,
@@ -50,5 +50,5 @@ export {
   reactWebComponents
 };
 
-//# debugId=CBD1B1F7DB72F54B64756E2164756E21
+//# debugId=9794CB9F6B63057264756E2164756E21
 //# sourceMappingURL=index.js.map
