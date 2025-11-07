@@ -29526,15 +29526,23 @@ root.render(/* @__PURE__ */ jsx_dev_runtime2.jsxDEV(jsx_dev_runtime2.Fragment, {
     className: "column",
     children: [
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
-        className: "parallax"
+        className: "parallax sky"
+      }, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
+        className: "parallax far"
+      }, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
+        className: "parallax medium"
+      }, undefined, false, undefined, this),
+      /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
+        className: "parallax near"
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(BodyMovin, {
         style: {
           width: "300px",
           height: "300px",
           marginBottom: "-65px",
-          zIndex: "1",
-          opacity: "0.75"
+          zIndex: "1"
         },
         src: "/tosi.json"
       }, undefined, false, undefined, this),

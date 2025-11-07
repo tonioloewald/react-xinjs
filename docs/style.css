@@ -101,10 +101,31 @@ body {
   height: 100%;
   z-index: -1;
   position: absolute;
-  background: url(/sky.jpg);
   background-size: cover;
   background-position: center;
-  transform: translateZ(-8px) scale(12);
+}
+
+.sky {
+  background-image: url(/sky.svg);
+  transform: translateZ(-8px) scale(10);
+}
+
+.far {
+  background-image: url(/cloud.svg);
+  filter: blur(2px);
+  transform: translateY(20%) translateZ(-6px) scale(8);
+}
+
+.medium {
+  background-image: url(/cloud.svg);
+  filter: brightness(90%) blur(4px);
+  transform: translateY(30%) translateZ(-4px) rotateY(180deg) scale(9);
+}
+
+.near {
+  background-image: url(/cloud.svg);
+  filter: brightness(80%) blur(8px);
+  transform: translateY(30%) translateZ(-2px) scale(8);
 }
 
 .doc {

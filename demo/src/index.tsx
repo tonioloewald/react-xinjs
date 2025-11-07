@@ -14,14 +14,16 @@ const root = ReactDOM.createRoot(container);
 root.render(
   <>
     <div className="column">
-      <div className="parallax"></div>
+      <div className="parallax sky"></div>
+      <div className="parallax far"></div>
+      <div className="parallax medium"></div>
+      <div className="parallax near"></div>
       <BodyMovin
         style={{
           width: "300px",
           height: "300px",
           marginBottom: "-65px",
           zIndex: "1",
-          opacity: "0.75",
         }}
         src="/tosi.json"
       />
