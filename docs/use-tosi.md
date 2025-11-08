@@ -13,16 +13,33 @@ elements. This is insanely simpler than dealing with hooks and providers, allows
 you to integrate code libraries with React without complex adapters, and just makes
 life better in general.
 
-[demo/todo.tsx](https://github.com/tonioloewald/react-xinjs/blob/main/demo/src/todo.tsx) shows how you can
-sync state between a vanilla js model and pure functional components using `useTosi()`.
+The **Reminders** demo, [demo/todo.tsx](https://github.com/tonioloewald/react-xinjs/blob/main/demo/src/todo.tsx),
+shows how you can sync state between a vanilla js model and pure functional components using `useTosi()`.
 
 You can also go into your browser's console and see the `app` proxy that is synced to the React UI elements
-in this demo. In the console, try something like `app.name = "hello tosijs"`, or if you're feeling adventurous
-you can directly create or modify the todo list items.
+in this demo. In the console, try something like:
 
-You can even create a todo item and then modify the text of the item directly.
+```
+app.name = "hello tosijs"
+```
 
-All this is accomplished with, basically, no code. And it's performant (try turning on render flashing).
+Or if you're feeling adventurous you can directly create or modify the todo list items, e.g.:
+
+```
+app.todos.push({
+  id: Math.random(),
+  reminder: 'try building an app with tosijs'
+})
+```
+
+You can even create a todo item and then modify the text of the item directly:
+
+```
+// assuming there is a reminder to modify you
+app.todos[0].reminder = 'look I changed ya'
+```
+
+All this is accomplished with, basically, no custom code. And it's performant (try turning on render flashing).
 
 > It's widely estimated that 70% of the code in React apps is simply moving data to and from the UI. With
 > `tosijs` managing state it's a _lot_ less.
@@ -31,10 +48,12 @@ All this is accomplished with, basically, no code. And it's performant (try turn
 
 `reactWebComponents.fooBar` gives you a react functional component for generating
 `<foo-bar>` elements. Since [tosijs](https://tosijs.net) makes it super easy to create web-components,
-and also provides a library [tosijs-ui](https://ui.tosijs.net) with lots of useful web-components, and also
+and provides a library [tosijs-ui](https://ui.tosijs.net) with lots of useful web-components, and also
 lets you use [tosijs blueprints](https://tosijs.net/?blueprint-loader.ts) to dynamically load web-components as needed,
-this is also a Very Good Thing™.
+this is a Very Good Thing™.
 
 [demo/todo.tsx](https://github.com/tonioloewald/react-xinjs/blob/main/demo/src/index.tsx) shows how you can
 turn web components (both lottie animation component at the top of the demo and the markdown component
 that is rendering this text) into React functional components using the `reactWebComponents` proxy.
+
+`react-tosijs` is copyright ©2023-2025 Tonio Loewald

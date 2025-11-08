@@ -3,7 +3,7 @@
 :root {
   --bg: #fdfdfd30;
   --body-bg: 6087ba;
-  --accent-color: #47f;
+  --accent-color: #35d;
   --shadow-color: #00000040;
   --font-size: 15px;
   --line-height: 20px;
@@ -153,7 +153,7 @@ h2 {
 code {
   font-family: "Spline Sans", monospace;
   font-weight: 400;
-  color: #22c;
+  color: var(--accent-color);
 }
 
 blockquote {
@@ -161,6 +161,16 @@ blockquote {
   background: #fff6;
   margin: 0;
   padding: 1em 2em;
+}
+
+pre {
+  border-radius: 0.25em;
+  background: #2228;
+  padding: 1em;
+}
+
+pre code {
+  color: #eee;
 }
 
 .App {
